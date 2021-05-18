@@ -4,7 +4,7 @@ module.exports = {
   productionSourceMap: false,
   pluginOptions: {
     electronBuilder: {
-      preload: "./src/preload.js",
+      preload: "src/preload.js",
       externals: ["knex", "sqlite3"],
       productName: "vue electron sqlite3",
       builderOptions: {

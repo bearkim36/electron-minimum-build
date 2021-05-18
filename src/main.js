@@ -5,8 +5,12 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+
 new Vue({
   router,
   store,
+  created() {
+    this.$router.push("/home").catch(() => {});
+  },
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app");

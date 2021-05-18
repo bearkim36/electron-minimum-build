@@ -19,7 +19,7 @@ console.log(path.join(__dirname, "preload.js"))
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
+    width: 1200,
     height: 600,
     webPreferences: {
       
@@ -114,7 +114,7 @@ ipcMain.on('get-user-data', async (event) => {
       .select("PHONE")
       .select("EMAIL")
       .select("BIRTHDAY");
-     event.returnValue = rows;
+     event.returnValue = rows;  
   }
   catch(err) {
     console.error(err);
