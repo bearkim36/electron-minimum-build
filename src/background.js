@@ -5,6 +5,7 @@ import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import { ipcMain } from 'electron'
+import fs from 'fs';
 
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -14,13 +15,11 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
-console.log(path.join(__dirname, "preload.js"))
-
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1200,
-    height: 600,
+    width: 900,
+    height: 700,
     webPreferences: {
       
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -103,9 +102,34 @@ const knex = require("knex")({
   connection: {
     filename: dbFilePath
   },
-
   useNullAsDefault: true
 });
+
+
+let constFilePath = path.join(
+  path.dirname(__dirname),
+  "extraResources",
+  "config.json"
+);
+if (process.env.WEBPACK_DEV_SERVER_URL) {
+  constFilePath = path.join(__dirname, "../", "extraResources", "config.json");  
+}
+const tmp = fs.readFileSync(constFilePath, {encoding:'utf-8'})
+global.__config = JSON.parse(tmp);
+
+
+ipcMain.on('set-config', async (event, arg) => {
+  console.log(arg);
+  fs.writeFileSync(constFilePath, JSON.stringify(arg), { encoding: 'utf8', flag: 'w' });
+  __config = arg;
+  event.returnValue = true;  
+});
+
+ipcMain.on('get-config', async (event) => {
+  event.returnValue = __config;  
+});
+
+
 
 ipcMain.on('get-user-data', async (event) => {
   try {
