@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>aaaaaa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+  </head>
+  <style>
+    html,body {
+      margin:0;
+      padding:0;
+      width:100%;
+      height:100vh;      
+    }
+    #app {
+      width:100%;
+      height:100%;
+    }
+    #webview{
+      width:100%;
+      height:100%;
+    }
+  </style>
+  <body>
+    <noscript>
+      <strong>We're sorry but  doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app" class="root" style="width:100%; height: 100%;">
+      
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
+
+<script>
+  function createWebview(id, url) {
+        //creates a webview with the id of the tab and the url loaded
+        let webview = document.createElement("webview");
+        webview.setAttribute("id", id);
+        webview.setAttribute("src", url);
+        webview.setAttribute("nodeintegration", "");
+        webview.setAttribute("webpreferences", "contextIsolation=false");
+        webview.setAttribute("style", "width:100%;height:100%");        
+        return webview;
+  }
+  // document.querySelector(".root").appendChild(createWebview("web", `file://${__dirname}/webview.html`));
+  document.querySelector(".root").appendChild(createWebview("webview", `http://192.168.0.113:8080/access`));
+</script>
